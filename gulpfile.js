@@ -10,9 +10,9 @@ var gulp       = require('gulp'),
     plumber    =require('gulp-plumber');
 
 var path = {
-  All: ['./src/**/*.+(scss|css)','./src/**/*.js' , './app.js', './index.html'],
+  All: ['./src/**/*.+(scss|css)','./main.scss','./src/**/*.js' , './app.js', './index.html'],
   Js : ['./src/**/*.js','./app.js'],
-  Css: ['./src/**/*.+(scss|css)'],
+  Css: ['./src/**/*.+(scss|css)','./main.scss','./node_modules/bootstrap/dist/css/bootstrap.css'],
   library:['./library/*.js'],
   Html:'./index.html',
   DEST_BUILD: './build'
