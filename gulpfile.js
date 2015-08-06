@@ -2,20 +2,21 @@ var gulp       = require('gulp'),
     uglify     = require('gulp-uglify'),
     concat     = require('gulp-concat'),
     notify     = require('gulp-notify'),
-    browserify = require('gulp-browserify'),
-    babel      = require('gulp-babel'),
+    browserify = require('browserify'),
     connect    = require('gulp-connect'),
     sass       = require('gulp-sass'),
     minifyCss  = require('gulp-minify-css'),
     plumber    =require('gulp-plumber');
+    babelify  = require('babelify');
+    source = require('vinyl-source-stream');
 
 var path = {
-  All: ['./src/**/*.+(scss|css)','./main.scss','./src/**/*.js' , './app.js', './index.html'],
-  Js : ['./src/**/*.js','./app.js'],
-  Css: ['./src/**/*.+(scss|css)','./main.scss','./node_modules/bootstrap/dist/css/bootstrap.css'],
-  library:['./library/*.js'],
-  Html:'./index.html',
-  DEST_BUILD: './build'
+  All: ['src/**/*.+(scss|css)','main.scss','src/**/*.js' ,'src/ngToolapp.js', 'app.js', 'index.html', 'view/**/*.html'],
+  Js : ['app.js'],
+  Css: ['src/**/*.+(scss|css)','main.scss'],
+  library:['library/*.js'],
+  Html:['index.html', 'view/*.html'],
+  DEST_BUILD: 'build'
 };
 
 /*建立網站*/
@@ -38,32 +39,22 @@ gulp.task('librartTool',function(){
 })
 
 gulp.task('srcTool',function () {
+    //browserify 取得 import 的檔案
+     browserify(path.Js)
+    //es6 to es5 (也可寫在package.json)
+     // "browserify": {
+  //   "transform": ["babelify"]
+  // },
+    .transform(babelify)
 
-  gulp.src(path.Js)
-
-  .pipe(plumber())
-
-  /*編譯 ex6 */
-  .pipe(babel())
-
-  /*打包成一個新的檔案*/
-  .pipe(concat('app.min.js'))
-
-  .pipe(browserify({
-      insertGlobals: true,
-      debug: true
-  }))
-
-  /*醜化他
-  .pipe(uglify())*/
-
-  /*建立在這個位置下*/
-  .pipe(gulp.dest(path.DEST_BUILD))
-
-  /*當執行到此處重整頁面*/
-  .pipe(connect.reload())
-
-  .pipe(notify({ message: 'js完成' }));
+    .bundle()
+     //取得及已經轉es5的檔案轉成實體檔案
+    .pipe(source('app.min.js'))
+    // Start piping stream to tasks!
+    .pipe(gulp.dest(path.DEST_BUILD))
+   /*當執行到此處重整頁面*/
+    .pipe(connect.reload())
+    .pipe(notify({ message: 'js完成' }));
 });
 
 gulp.task('cssTool',function() {
