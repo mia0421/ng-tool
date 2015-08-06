@@ -12,7 +12,7 @@ import $ from 'jquery';
     isWidth: 彈出寬度 直接設定數值 不須加px
  */
 
-angular.module('ngToolSidebar', []).directive('ngSidebar', () => {
+var ngToolSidebar =angular.module('ngToolSidebar', []).directive('ngSidebar', () => {
     return {
         restrict: 'A',
         transclude: true,
@@ -42,19 +42,19 @@ angular.module('ngToolSidebar', []).directive('ngSidebar', () => {
                 }
                 if (isDirection === 'right' || isDirection === 'left') {
                 	/*左右*/
-                   divCont.css({
+                    divCont.css({
 	                   	[isDirection]: '-' + isWidth,
-	                   	width:isWidth,
-	                   	top:0,
-	                   	bottom:0
-                   });
+	                   	width        :isWidth,
+	                   	top          :0,
+	                   	bottom       :0
+                    });
                 } else {
                 	/*上下*/
                 	divCont.css({
 	                   	[isDirection]: '-' + isWidth,
-	                   	height:isWidth,
-	                   	right:0,
-	                   	left:0
+	                   	height       :isWidth,
+	                   	right        :0,
+	                   	left         :0
                    });
                 }
 
@@ -71,7 +71,6 @@ angular.module('ngToolSidebar', []).directive('ngSidebar', () => {
 
                     });
                 } else { /*隱藏*/
-                	console.log('in directive close');
                     /*改變原本的rigth*/
                     divCont.css({
                     	[isDirection]: 0
@@ -89,3 +88,4 @@ angular.module('ngToolSidebar', []).directive('ngSidebar', () => {
         }
     };
 });
+
