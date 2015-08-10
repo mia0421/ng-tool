@@ -4,157 +4,142 @@ import $ from 'jquery';
 
 /*UI 處理頁碼*/
 var ngToolPage =  angular.module('ngToolPage', [])
-.directive("ngPage",['$window', ($window) => {
+.directive('ngPage',[() => {
     return {
         templateUrl: '../src/ngToolPage/ngToolPage.html',
         scope: {
             pageItems : "=", /*一組幾頁*/
             pageTotal : "=",/*共幾頁*/
             nowPage   : "=",/*現在頁數*/
-            chengEvent: "="/*頁碼變換事件*/
+            chengEvent: "=",/*頁碼變換事件*/
+            simpleView: "=" //是否顯示簡單頁碼
         },
         link (scope, element, attr) {
-             /*給預設值 */
-            scope.pageItems = scope.pageItems || 1;
-            scope.pageTotal = scope.pageTotal || 1;
-            scope.nowPage = scope.nowPage || 1;
-
-
-            scope.showPageArry = scope.showPageArry || false;
-            scope.leftShowPageArry = false;
-            scope.PageArray = [];
-            scope.view = true;
-            /*變換頁碼工具*/
-            var PageToole = {
-                /*初始化*/
-                initPage: () => {
-                    /*計算要移動到哪一組頁*/
-                    var newPageArray = Math.floor((scope.nowPage) / scope.pageItems);
-                    var Spage = (newPageArray * scope.pageItems) + 1;
-                    var Epage = Spage + scope.pageItems - 1;
-                    Epage = Epage <= scope.pageTotal  ? Epage : scope.pageTotal ;
-                    /*呼叫建立頁碼Fun 回傳新陣列*/
-                    PageToole.createPage(Spage, Epage);
-                },
+            // tool
+            let PageToole = {
                 /*移動頁碼*/
-                toPage: (goPage) => {
+                toPage(goPage) {
+                    let {
+                            PageArray,
+                            _nowPage,
+                            pageItems
+                        } = scope
                     /*判斷是否是需要換組頁*/
-                    var arrayStart = scope.PageArray[scope.PageArray.length - 1] ;
-                    var arrayEnd = scope.PageArray[0] ;
-                    if (scope.nowPage < arrayEnd || scope.nowPage > arrayStart) {
-                        /*計算要移動到哪一組頁*/
-                        var newPageArray = Math.floor((scope.nowPage-1) / scope.pageItems);
-                        var Spage = (newPageArray * scope.pageItems) + 1;
-                        var Epage = Spage + scope.pageItems - 1;
-                        Epage = Epage <= scope.pageTotal ? Epage : scope.pageTotal ;
-                        /*呼叫建立頁碼Fun 回傳新陣列*/
-                        PageToole.createPage(Spage, Epage);
+                    if (goPage < PageArray[pageItems - 1] || goPage > PageArray[0]) {
+                        PageToole.createPage(goPage - 1);
                     }
+                },
+                searchPageArray(_nowPage) {
+                    let {
+                        pageItems,
+                        pageTotal
+                    } = scope,
+                        newPageArray = Math.floor((_nowPage) / pageItems),
+                        Spage        = (newPageArray * pageItems) + 1 <= 1 ? 1 : (newPageArray * pageItems) + 1,
+                        Epage        = (Spage + pageItems - 1) <= pageTotal ? (Spage + pageItems - 1) : pageTotal;
+                    return {
+                        Spage,
+                        Epage
+                    };
                 },
                 /*產生頁數Array*/
-                createPage: (Spage, Epage) => {
+                createPage(_nowPage) {
+                    let {
+                            PageArray,
+                            pageItems,
+                            pageTotal
+                        } = scope,
+                        {
+                            Spage,
+                            Epage
+                        } = PageToole.searchPageArray(_nowPage);
+                    /*判斷是否還有上下一組頁*/
+                    scope.showPageArray = [Spage > 1, Epage < pageTotal];
                     scope.PageArray = [];
-                    var Spage = Spage <=1 ? 1 : Spage;
-                    var Epage = Epage >= scope.pageTotal  ? scope.pageTotal  : Epage;
-                    for (var i = Spage; i <= Epage; i++) {
+                    for (var i = Spage; i <= Epage; i ++) {
                         scope.PageArray.push(i);
                     }
-                    /*判斷是否還有上下一組頁*/
-                    scope.showPageArry = scope.PageArray[scope.PageArray.length - 1]  < scope.pageTotal;
-                    scope.leftShowPageArry = scope.PageArray[0]  > 1;
+                },
+                initPage() {
+                    scope._pageItems = scope.pageItems || 1;
+                    scope._pageTotal = scope.pageTotal || 1;
+                    scope._nowPage = scope.nowPage || 1;
+                    scope.chengEvent = scope.chengEvent || (() => {});
+                    scope.showPageArray = [false, false];
+                    scope.PageArray = [];
+                    scope.view = scope.simpleView || false;
+                    PageToole.createPage(scope._nowPage);
                 }
             }
-            /*初始化*/
-            PageToole.initPage();
 
-            /*關注 頁碼變換 方便從外面更改頁碼 也可同步異動*/
-            scope.$watch("nowPage", function (newVal, oldVal) {
-                /*判斷 重要參數都有質 才可執行 改變頁碼工作*/
-                var checkNowpage = newVal !== "" && newVal >= 1 && !angular.isUndefined(scope.nowPage);
-                if (!checkNowpage) {
-                    return;
-                }
-                if (newVal >=1 && newVal <= scope.pageTotal) {
-                    PageToole.toPage(scope.nowPage);
-                }
-            });
-            /*等 pageTotal 及 pageItems 有資料更新陣列資料*/
-            scope.$watch("pageItems", () => {
-                PageToole.initPage();
-            });
-            scope.$watch("pageTotal", (newVal, oldVal) => {
-                PageToole.initPage();
-            },true);
-
-            /*UI 上 變換資料事件*/
+            // event
             scope.toPage = (chengTyep, page) => {
+                let {
+                        _nowPage,
+                        _pageTotal,
+                        _pageItems,
+                        chengEvent,
+                        PageArray,
+                    } = scope;
                 switch (chengTyep) {
                     case "next":
-                        var goPage = scope.nowPage + 1;
-                        if (goPage >=1 && goPage <= scope.pageTotal) {
-                            scope.nowPage++;
-                            if (!angular.isUndefined(scope.chengEvent)) {
-                                scope.chengEvent(goPage);
-                            }
+                        if (_nowPage + 1 >= 1 && _nowPage + 1 <= _pageTotal) {
+                            scope._nowPage += 1;
+                            chengEvent(scope._nowPage);
                         }
                         break;
                     case "previous":
-                        var goPage = scope.nowPage - 1;
-                        if (goPage >= 1 && goPage <= scope.pageTotal) {
-                            scope.nowPage--;
-                            if (!angular.isUndefined(scope.chengEvent)) {
-                                scope.chengEvent(goPage);
-                            }
+                        if (_nowPage - 1 >= 1 && _nowPage - 1 <= _pageTotal) {
+                            scope._nowPage -= 1;
+                            chengEvent(scope._nowPage);
                         }
                         break;
                     case "nextArray":
-                        var goPage = scope.PageArray[scope.PageArray.length - 1]+1;
-                        if (goPage >=1 && goPage <= scope.pageTotal) {
-                            scope.nowPage = goPage;
-                            if (!angular.isUndefined(scope.chengEvent)) {
-                                scope.chengEvent(goPage);
-                            }
+                        let newPage = PageArray[_pageItems - 1]+1;
+                        if (newPage >=1 && newPage <= scope._pageTotal) {
+                            scope._nowPage = newPage;
+                            chengEvent(newPage);
                         }
                         break;
                     case "previousArray":
-                        var goPage = scope.PageArray[0] - scope.pageItems;
-                        if (goPage >= 1 && goPage <= scope.pageTotal) {
-                            scope.nowPage = goPage;
-                            if (!angular.isUndefined(scope.chengEvent)) {
-                                scope.chengEvent(goPage);
-                            }
+                        var newPage = PageArray[0] - _pageItems;
+                        if (newPage >= 1 && newPage <= _pageTotal) {
+                            scope._nowPage = newPage;
+                            chengEvent(newPage);
                         }
                         break;
                     case "toPage":
-                        if (page >= 1 && page <= scope.pageTotal) {
-                            scope.nowPage = page;
-                            if (!angular.isUndefined(scope.chengEvent)) {
-                                scope.chengEvent(page);
-                            }
+                        if (page >= 1 && page <= _pageTotal) {
+                            scope._nowPage = page;
+                            chengEvent(page);
                         }
                         break;
                 }
+                PageToole.toPage(scope._nowPage);
             }
+
+            /*關注 頁碼變換 方便從外面更改頁碼 也可同步異動*/
+            scope.$watch("nowPage", function (newVal, oldVal) {
+                if (newVal === "" || newVal < 1 || angular.isUndefined(scope._nowPage)) {
+                    return;
+                }
+                if (newVal >=1 && newVal <= scope._pageTotal) {
+                    PageToole.toPage(scope._nowPage);
+                }
+            });
+            /*等 pageTotal 及 pageItems 有資料更新陣列資料*/
+            scope.$watch("pageItems", (newVal, oldVal) => {
+                if(newVal){
+                    PageToole.initPage();
+                }
+            });
+            scope.$watch("pageTotal", (newVal, oldVal) => {
+                if(newVal){
+                    PageToole.initPage();
+                }
+            });
         }
     }
 }]);
 
-$(window).bind('resize', () => {
-   var  uiWidth = $("[name=centerW]").width();
-   if ((uiWidth + 250) < $("#uiPagination").width()) {
-        var scope = angular.element($("#uiPagination").parent()).scope();
-        if (typeof( scope)!="undefined") {
-            scope.$apply(() => {
-                scope.view = true;
-            });
-        }
-    } else {
-        var scope = angular.element($("#uiPagination").parent()).scope();
-        if (typeof(scope) != "undefined") {
-            scope.$apply(() => {
-                scope.view = false;
-            });
-        }
-    }
-});
 

@@ -48,6 +48,7 @@ gulp.task('srcTool',function () {
     .transform(babelify)
 
     .bundle()
+    .pipe(plumber())
      //取得及已經轉es5的檔案轉成實體檔案
     .pipe(source('app.min.js'))
     // Start piping stream to tasks!

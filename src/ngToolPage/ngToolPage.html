@@ -1,54 +1,48 @@
 <div id="uiPagination">
-    <div class="paginationStyle" ng-show="view" name="Bview">
 
-        <div class="centerDiv">
-            <div class="btn-group" name="centerW">
-                <a class="btn btn-default" ng-click="toPage('toPage',1)">
-                    <i class="glyphicon glyphicon-backward"></i>
+        <ul class="pagination" >
+            <li ng-class="{'disabled':1 === _nowPage}">
+                <a ng-click="toPage('toPage',1)" >
+                   <i class="glyphicon glyphicon-backward"></i>
                 </a>
-                <a class="btn btn-default" ng-click="toPage('previous')" >
+            </li>
+             <li ng-class="{'disabled':1 === _nowPage}">
+                <a ng-click="toPage('previous')" >
                     <i class="glyphicon glyphicon-chevron-left"></i>
                 </a>
-
-                <a class="btn btn-default" ng-click="toPage('previousArray')" ng-show="leftshowpagearry">...</a>
-                <span 
-                    ng-repeat="page in PageArray"
-                    class="btn"
-                    ng-class="{true:'btn-info',false:'btn-default'}[page === nowPage]"
-                    ng-click="toPage('toPage',page)">
-                    {{page}}
-                </span>
-                <a class="btn btn-default" ng-click="toPage('nextArray')" ng-show="showpagearry">...</a>
-
-                <a class="btn btn-default" ng-click="toPage('next')" >
-                    <i class="glyphicon glyphicon-chevron-right"  ></i>
+            </li>
+             <li ng-hide="view">
+                <a  ng-click="toPage('previousArray')" ng-show="showPageArray[0]">
+                    ...
                 </a>
-                <a class="btn btn-default" ng-click="toPage('toPage',pagetotal)">
+            </li>
+             <li ng-show="view">
+                <a>
+                    {{_nowPage}}/{{_pageTotal}}
+                </a>
+            </li>
+            <li ng-hide="view"
+                ng-repeat="page in PageArray"
+                ng-class="{'active':page === _nowPage}">
+                <a ng-click="toPage('toPage',page)">
+                    {{page}}
+                </a>
+            </li>
+            <li ng-hide="view">
+                <a ng-click="toPage('nextArray')" ng-show="showPageArray[1]">
+                    ...
+                </a>
+            </li>
+            <li ng-class="{'disabled':_pageTotal === _nowPage}">
+                <a ng-click="toPage('next')" >
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                </a>
+            </li>
+            <li ng-class="{'disabled':_pageTotal === _nowPage}">
+                <a ng-click="toPage('toPage',_pageTotal)">
                     <i class="glyphicon glyphicon-forward"></i>
                 </a>
-            </div>
-        </div>
-    </div>
-    <div class="paginationStyle" ng-hide="view" name="Sview">
-        <div class="btn-group">
-            <a class="btn btn-default" ng-click="toPage('toPage',1)">
-                <i class="glyphicon glyphicon-backward"></i>
-            </a>
-            <a class="btn btn-info" ng-click="toPage('previous')">
-                <i class="glyphicon glyphicon-chevron-left"></i>
-            </a>
-
-            <span class="btn btn-default">
-                {{nowPage}}/{{pageTotal}}
-            </span>
-
-            <a class="btn btn-info" ng-click="toPage('next')">
-                <i class="glyphicon glyphicon-chevron-right"></i>
-            </a>
-            <a class="btn btn-default" ng-click="toPage('toPage',pagetotal)">
-                <i class="glyphicon glyphicon-forward"></i>
-            </a>
-        </div>
-    </div>
+            </li>
+        </ul>
 </div>
 
