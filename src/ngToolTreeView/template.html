@@ -1,28 +1,25 @@
 <ul class="ulBox">
     <li ng-repeat ="item in rsource|treeFil:pid" >
-        <span ng-show="item.isParents" ng-click="arrowClick(item, $index)">
-            <i
-                class="glyphicon"
-                ng-class="{true:'glyphicon-minus',false:'glyphicon-plus'}[item.isOpen]"></i>
-        </span>
-        <span ng-class="{txt:!item.isParents}"></span>
-        <span
-            ng-hide="item.disabled"
-            ng-class="{'btn btn-primary btn-xs':item.isSelect}"
-            ng-click="rclick({data:item})">
-             <i class="{{item.icon}}"></i>
-             {{item.Name}}_{{item.NodeID}}
-        </span>
-        <span
-            ng-show="item.disabled"
-            class="text-muted" >
-            <i class="{{item.icon}}"></i>
-            {{item.Name}}_{{item.NodeID}}
-        </span>
-        <span
-            ng-if="item.isOpen"
-            ng-include="'treeTemplate.html'">
-        </span>
+            <span class="iconBox">
+                    <a
+                        ng-show="item.isParents"
+                        ng-click="arrowClick(item, $index)">
+                        <i
+                            class="glyphicon"
+                            ng-class="{true:'glyphicons-circle-minus',false:'glyphicons-circle-plus'}[item.isOpen]"></i>
+                            <span class="glyphicons glyphicons-circle-minus"></span>
+                    </a>
+            </span>
+            <span
+                ng-class="{'btn btn-primary btn-xs':item.isSelect, 'text-muted':item.disabled}"
+                ng-click="rclick({data:item})">
+                    <i class="{{item.icon}}"></i>
+                    {{item.Name}}_{{item.NodeID}}
+            </span>
+            <span
+                ng-if="item.isOpen"
+                ng-include="'treeTemplate.html'">
+            </span>
     </li>
 </ul>
 
