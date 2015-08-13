@@ -1,3 +1,4 @@
+import './_ngToolTreeViewCss.scss';
 import angular from 'angular';
 import $ from 'jquery';
 
@@ -16,6 +17,7 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
                     $scope._bind = angular.copy(parseInt( nodeId,10));
                     if ($scope._bind != null) {
                         angular.forEach($scope._source, (val, index) => {
+                            console.log('changeNode', val.NodeID , $scope._bind);
                             val.isSelect = (val.NodeID === $scope._bind);
                         });
                         /*從程式內指定打開某一層時 找到上層節點都點開(遞迴)*/
@@ -33,7 +35,6 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
                             val.isSelect = false;
                         });
                     }
-                    //this.changeNode($scope._source);
                 },
                 init(){
                     $scope._source = angular.isObject($scope.source) ? angular.copy($scope.source) : [];
@@ -58,9 +59,10 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
                tool.changeNode(newVal);
             }, true);
             $scope._click = (item) => {
-                console.log('click', item);
-                tool.changeNode(item.data.NodeID);
-                $scope.click(item);
+                if(!item.data.disabled) {
+                    tool.changeNode(item.data.NodeID);
+                    $scope.click(item);
+                }
             }
         }
     }
@@ -72,15 +74,11 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
             rsource: "=",
             rclick : "&"
         },
-        require : '^?ngTreeView',
         templateUrl: '../src/ngToolTreeView/template.html',
-        link(scope, element, attrs, ngTreeViewController) {
+        link(scope, element, attrs) {
             scope.arrowClick = (item,index) => {
                 item.isOpen = !item.isOpen;
             }
-            // ngTreeViewController.changeNode = () => {
-
-            // }
         }
     }
 }])
