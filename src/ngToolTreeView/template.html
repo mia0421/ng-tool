@@ -6,15 +6,14 @@
                         ng-click="arrowClick(item, $index)">
                         <i
                             class="glyphicon"
-                            ng-class="{true:'glyphicons-circle-minus',false:'glyphicons-circle-plus'}[item.isOpen]"></i>
-                            <span class="glyphicons glyphicons-circle-minus"></span>
+                            ng-class="{true:'glyphicon-triangle-bottom',false:'glyphicon-triangle-right'}[item.isOpen]"></i>
                     </a>
             </span>
-            <span
+            <span class="nodeTxt"
                 ng-class="{'btn btn-primary btn-xs':item.isSelect, 'text-muted':item.disabled}"
                 ng-click="rclick({data:item})">
                     <i class="{{item.icon}}"></i>
-                    {{item.Name}}_{{item.NodeID}}
+                    {{item.Name}} (NodeID:{{item.NodeID}})
             </span>
             <span
                 ng-if="item.isOpen"

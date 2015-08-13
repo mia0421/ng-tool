@@ -1,3 +1,5 @@
+
+
 .ulBox {
     white-space: nowrap;
 }
@@ -7,14 +9,19 @@
     padding-left:25px;
     li {
         list-style: none;
+        line-height: 30px;
+        font-weight:normal;
+        span.iconBox{
             cursor: pointer;
-            line-height: 30px;
-           color: rgb(66, 139, 202);
-            font-weight:normal;
-            &:hover{
-                color: rgb(51, 107, 155);
-                font-weight: bold;
-            };
+        }
+        span.nodeTxt:hover{
+            font-weight: bold;
+            cursor: pointer;
+        };
+        span.text-muted:hover {
+             font-weight:normal;
+             cursor: no-drop;
+        }
     }
 }
 

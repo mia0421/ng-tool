@@ -25,29 +25,6 @@
   moz-box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5);
   box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5); }
 
-.ulBox {
-  white-space: nowrap; }
-
-.ulBox {
-  -webkit-padding-start: 0px;
-  padding-left: 25px; }
-  .ulBox li {
-    list-style: none;
-    cursor: pointer;
-    line-height: 30px;
-    color: #428bca;
-    font-weight: normal; }
-    .ulBox li:hover {
-      color: #336b9b;
-      font-weight: bold; }
-
-.iconBox {
-  width: 15px;
-  display: inline-block; }
-  .iconBox .glyphicon {
-    font-size: 12px;
-    top: 0; }
-
 .div-body {
   position: absolute;
   top: 0;

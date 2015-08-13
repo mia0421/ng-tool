@@ -4,11 +4,12 @@
   "description": "",
   "repository": {},
   "dependencies": {
-    "gulp-uglify": ">=1.2.0",
-    "gulp-concat": ">=2.5.2",
-    "gulp-notify": ">=2.2.0",
-    "gulp-connect": ">=2.2.0",
     "angular": ">=0.0.1",
+    "browserify-css": "^0.6.1",
+    "gulp-concat": ">=2.5.2",
+    "gulp-connect": ">=2.2.0",
+    "gulp-notify": ">=2.2.0",
+    "gulp-uglify": ">=1.2.0",
     "jquery": ">=0.0.1"
   },
   "devDependencies": {
@@ -27,4 +28,3 @@
   "author": "",
   "license": "ISC"
 }
-

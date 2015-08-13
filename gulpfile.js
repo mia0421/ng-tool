@@ -6,16 +6,17 @@ var gulp       = require('gulp'),
     connect    = require('gulp-connect'),
     sass       = require('gulp-sass'),
     minifyCss  = require('gulp-minify-css'),
-    plumber    =require('gulp-plumber');
-    babelify  = require('babelify');
-    source = require('vinyl-source-stream');
+    plumber    =require('gulp-plumber'),
+    babelify  = require('babelify'),
+    source = require('vinyl-source-stream'),
+    browserifyCss = require('browserify-css');
 
 var path = {
   All: ['src/**/*.+(scss|css)','main.scss','src/**/*.js' ,'src/ngToolapp.js', 'app.js', 'index.html', 'view/**/*.html'],
   Js : ['app.js'],
   Css: ['src/**/*.+(scss|css)','main.scss'],
   library:['library/*.js'],
-  Html:['index.html', 'view/*.html'],
+  Html:['index.html', 'view/*.html', 'src/**/*/html'],
   DEST_BUILD: 'build'
 };
 
@@ -45,9 +46,11 @@ gulp.task('srcTool',function () {
      // "browserify": {
   //   "transform": ["babelify"]
   // },
+  .transform(browserifyCss)
     .transform(babelify)
 
     .bundle()
+
     .pipe(plumber())
      //取得及已經轉es5的檔案轉成實體檔案
     .pipe(source('app.min.js'))
