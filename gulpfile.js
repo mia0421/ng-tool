@@ -46,7 +46,7 @@ gulp.task('srcTool',function () {
      // "browserify": {
   //   "transform": ["babelify"]
   // },
-  .transform(browserifyCss)
+  //.transform(browserify)
     .transform(babelify)
 
     .bundle()
