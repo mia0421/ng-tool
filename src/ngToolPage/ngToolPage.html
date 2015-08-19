@@ -1,0 +1,48 @@
+<div id="uiPagination">
+
+        <ul class="pagination" >
+            <li ng-class="{'disabled':1 === _nowPage}">
+                <a ng-click="toPage('toPage',1)" >
+                   <i class="glyphicon glyphicon-backward"></i>
+                </a>
+            </li>
+             <li ng-class="{'disabled':1 === _nowPage}">
+                <a ng-click="toPage('previous')" >
+                    <i class="glyphicon glyphicon-chevron-left"></i>
+                </a>
+            </li>
+             <li ng-hide="view">
+                <a  ng-click="toPage('previousArray')" ng-show="showPageArray[0]">
+                    ...
+                </a>
+            </li>
+             <li ng-show="view">
+                <a>
+                    {{_nowPage}}/{{_pageTotal}}
+                </a>
+            </li>
+            <li ng-hide="view"
+                ng-repeat="page in PageArray"
+                ng-class="{'active':page === _nowPage}">
+                <a ng-click="toPage('toPage',page)">
+                    {{page}}
+                </a>
+            </li>
+            <li ng-hide="view">
+                <a ng-click="toPage('nextArray')" ng-show="showPageArray[1]">
+                    ...
+                </a>
+            </li>
+            <li ng-class="{'disabled':_pageTotal === _nowPage}">
+                <a ng-click="toPage('next')" >
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                </a>
+            </li>
+            <li ng-class="{'disabled':_pageTotal === _nowPage}">
+                <a ng-click="toPage('toPage',_pageTotal)">
+                    <i class="glyphicon glyphicon-forward"></i>
+                </a>
+            </li>
+        </ul>
+</div>
+

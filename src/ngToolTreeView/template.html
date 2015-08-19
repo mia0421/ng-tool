@@ -1,0 +1,34 @@
+<ul class="ulBox">
+    <li ng-repeat ="item in rsource|treeFil:pid" >
+            <span class="iconBox">
+                    <a
+                        ng-show="item.isParents"
+                        ng-click="arrowClick(item, $index)">
+                        <i
+                            class="glyphicon"
+                            ng-class="{true:'glyphicon-triangle-bottom',false:'glyphicon-triangle-right'}[item.isOpen]"></i>
+                    </a>
+            </span>
+            <span class="nodeTxt"
+                ng-class="{'btn btn-primary btn-xs':item.isSelect, 'text-muted':item.disabled}"
+                ng-click="rclick({data:item})">
+                    <i class="{{item.icon}}"></i>
+                    {{item.Name}} (NodeID:{{item.NodeID}})
+            </span>
+            <span
+                ng-if="item.isOpen"
+                ng-include="'treeTemplate.html'">
+            </span>
+
+    </li>
+</ul>
+
+
+<script type="text/ng-template" id="treeTemplate.html">
+    <span
+        tree-repeat
+        rsource='rsource'
+        rclick='rclick({data:data})'
+        pid='item.NodeID'
+        class='TvStyle'></span>
+</script>

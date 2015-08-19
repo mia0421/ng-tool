@@ -19,3 +19,51 @@
   -webkit-box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5);
   moz-box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5);
   box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5); }
+
+#uiPagination {
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center; }
+
+.ulBox {
+  white-space: nowrap; }
+
+.ulBox {
+  -webkit-padding-start: 0px;
+  padding-left: 25px; }
+  .ulBox li {
+    list-style: none;
+    line-height: 30px;
+    font-weight: normal; }
+    .ulBox li span.iconBox {
+      cursor: pointer; }
+    .ulBox li span.nodeTxt:hover {
+      font-weight: bold;
+      cursor: pointer; }
+    .ulBox li span.text-muted:hover {
+      font-weight: normal;
+      cursor: no-drop; }
+
+.div-body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+  .div-body .div-title {
+    height: 75px;
+    padding: 10px 20px; }
+  .div-body .div-menu {
+    position: absolute;
+    top: 75px;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    padding: 10px 20px; }
+  .div-body .div-view {
+    position: absolute;
+    top: 75px;
+    right: 0;
+    bottom: 0;
+    left: 300px;
+    padding: 10px 20px; }
