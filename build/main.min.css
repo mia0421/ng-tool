@@ -1,8 +1,3 @@
-#uiPagination {
-  font-size: 12px;
-  line-height: 30px;
-  text-align: center; }
-
 .SidebarDialog_bg {
   display: none;
   position: fixed;
@@ -24,6 +19,30 @@
   -webkit-box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5);
   moz-box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5);
   box-shadow: -4px -4px 12px -2px rgba(255, 255, 255, 0.5), 4px 4px 12px -2px rgba(255, 255, 255, 0.5); }
+
+#uiPagination {
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center; }
+
+.ulBox {
+  white-space: nowrap; }
+
+.ulBox {
+  -webkit-padding-start: 0px;
+  padding-left: 25px; }
+  .ulBox li {
+    list-style: none;
+    line-height: 30px;
+    font-weight: normal; }
+    .ulBox li span.iconBox {
+      cursor: pointer; }
+    .ulBox li span.nodeTxt:hover {
+      font-weight: bold;
+      cursor: pointer; }
+    .ulBox li span.text-muted:hover {
+      font-weight: normal;
+      cursor: no-drop; }
 
 .div-body {
   position: absolute;

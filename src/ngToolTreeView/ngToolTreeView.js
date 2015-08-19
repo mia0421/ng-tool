@@ -1,4 +1,3 @@
-import './_ngToolTreeViewCss.scss';
 import angular from 'angular';
 import $ from 'jquery';
 
