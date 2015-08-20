@@ -45,10 +45,10 @@ ngApp.controller('isCtrl', ['$scope','$location', 'menuVal',($scope,$location, m
 	}
 
 	$scope.ngPage ={
-		pageItems : 10,
+		pageItems : 5,
 		pageTotal : 101,
 		nowPage: 8,
-		simpleView: true
+		simpleView: false
 	}
 
 	$scope.ngTreeView = {

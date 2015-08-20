@@ -12,6 +12,7 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
         },
         controller($scope, $element, $attrs) {
             let tool = {
+
                 changeNode(nodeId) {
                     $scope._bind = angular.copy(parseInt( nodeId,10));
                     if ($scope._bind != null) {
@@ -60,7 +61,7 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
             $scope._click = (item) => {
                 if(!item.data.disabled) {
                     tool.changeNode(item.data.NodeID);
-                    $scope.click(item);
+                    $scope.click(item); 
                 }
             }
         }
