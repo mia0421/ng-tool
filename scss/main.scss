@@ -1,0 +1,23 @@
+@import "./_app.scss";
+
+
+@mixin position($top,$right,$bottom,$left) {
+	top   : $top;
+	right : $right;
+	bottom: $bottom;
+	left  : $left;	
+}
+
+
+
+.div-body {
+	@include container(960px);
+	.div-title{
+		@include leader(.5);
+	}
+	.div-menu {
+		
+	}
+	.div-view {
+	}
+}
