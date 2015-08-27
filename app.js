@@ -35,20 +35,31 @@ ngApp.controller('isCtrl', ['$scope','$location', 'menuVal',($scope,$location, m
 		$location.path($scope.menu[index].src);
 	}
 
+    //側邊dialog
 	$scope.ngSidebar = {
-		 isSwitch:false,
-		 isDirection:'left',
-		 isWidth:'400',
-		 load(data) {
-		 	console.log('load');
-		 }
+        event: (side) => {
+            $scope.ngSidebar.data.isDirection = side;
+            $scope.ngSidebar.data.isSwitch = true;
+        },
+        data : {
+    		isSwitch:false,
+    		isDirection:'left',
+    		isWidth:'400',
+    		load(data) {
+    		 	console.log('load');
+    		}
+        }
 	}
 
-	$scope.ngPage ={
+    //分頁
+	$scope.ngPage = {
 		pageItems : 5,
-		pageTotal : 101,
-		nowPage: 8,
-		simpleView: false
+		pageTotal : 100,
+		nowPage   : 8,
+		simpleView: false,
+        chengEvent: (page) => {
+            console.log('現在頁數', page);
+        }
 	}
 
 	$scope.ngTreeView = {
