@@ -28,33 +28,41 @@ var ngToolSidebar =angular.module('ngToolSidebar', []).directive('ngSidebar', ()
 		           	'</div>',
         link (scope, elem, attrs) {
 
-            let isWidth = (scope.isWidth ? scope.isWidth.toString() + 'px' : '500px'),
-            	isDirection = (scope.isDirection ? scope.isDirection.toLowerCase() : 'right'),
-                divCont = $(elem).find('div[class="SidebarDialog_content"]:first'),
-                divBg = $(elem).find('div[class="SidebarDialog_bg"]:first');
+       
+            let divCont     = $(elem).find('div[class="SidebarDialog_content"]:first'),
+                divBg       = $(elem).find('div[class="SidebarDialog_bg"]:first');
 
             /*抓取 開關變動 */
             scope.$watch('isSwitch', (newVal, oldVal) => {
+                let isWidth     = (scope.isWidth ? scope.isWidth + 'px' : '500px'),
+                    isDirection = (scope.isDirection ? scope.isDirection.toLowerCase() : 'right'),
+                    isReverse   = '';
 
-                /*判斷是否為 不合法的變動 */
+                /*判斷是為 不合法的變動 */
                 if (newVal === oldVal || angular.isUndefined(newVal) || angular.isUndefined(oldVal)) {
                     return;
                 }
                 if (isDirection === 'right' || isDirection === 'left') {
                 	/*左右*/
+                    isReverse = isDirection === 'right' ? 'left':'right';
                     divCont.css({
 	                   	[isDirection]: '-' + isWidth,
-	                   	width        :isWidth,
-	                   	top          :0,
-	                   	bottom       :0
+                        [isReverse]  : 'initial' ,
+	                   	width        : isWidth,
+                        height       : 'initial',
+                        top          :0,
+                        bottom       :0
                     });
                 } else {
                 	/*上下*/
+                    isReverse = isDirection === 'top' ? 'bottom':'top';
                 	divCont.css({
 	                   	[isDirection]: '-' + isWidth,
-	                   	height       :isWidth,
-	                   	right        :0,
-	                   	left         :0
+                        [isReverse]  : 'initial',
+	                   	height       :  isWidth,
+                        width        : 'initial',
+                        right        :0,
+                        left         :0
                    });
                 }
 
@@ -71,21 +79,19 @@ var ngToolSidebar =angular.module('ngToolSidebar', []).directive('ngSidebar', ()
 
                     });
                 } else { /*隱藏*/
-                    /*改變原本的rigth*/
                     divCont.css({
-                    	[isDirection]: 0
+                        [isDirection]:0
                     });
 
-                    /*要移動的位置*/
                     divCont.animate({
-                    	[isDirection]: '-' + scope.isWidth
+                    	[isDirection]: '-' + isWidth
                     }, 600, () => {
                         divBg.fadeOut(200);
-                        divCont.hide();
+                        divCont.hide(); 
                     });
                 }
             });
         }
-    };
+    }
 });
 
