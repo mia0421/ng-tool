@@ -4,13 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<script type="text/javascript" src="build/app.min.js"></script>
+		<link rel="stylesheet" href="node_modules/bootstrap//dist/css/bootstrap.css">
+
 	<link rel="stylesheet" href="build/main.min.css">
-	<link rel="stylesheet" href="node_modules/bootstrap//dist/css/bootstrap.css">
 </head>
 <body ng-app="ngApp" ng-controller="isCtrl">
-
+	
 	<div class="div-body">
-		<div class="div-title">
+		<div class="div-title grid_12">
 			<nav class="navbar navbar-default" role="navigation">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
@@ -19,7 +20,7 @@
 			  </div>
 			</nav>
 		</div>
-		<div class="div-menu">
+		<div class="div-menu grid_4">
 			<div class="list-group">
 				<a
 					ng-repeat="item in menu"
@@ -30,9 +31,8 @@
 				</a>
 			</div>
 		</div>
-		<div class="div-view" ng-view></div>
+		<div class="div-view grid_8" ng-view></div>
 	</div>
-
 </body>
 
 </html>

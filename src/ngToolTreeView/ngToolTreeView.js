@@ -12,11 +12,11 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
         },
         controller($scope, $element, $attrs) {
             let tool = {
+
                 changeNode(nodeId) {
                     $scope._bind = angular.copy(parseInt( nodeId,10));
                     if ($scope._bind != null) {
                         angular.forEach($scope._source, (val, index) => {
-                            console.log('changeNode', val.NodeID , $scope._bind);
                             val.isSelect = (val.NodeID === $scope._bind);
                         });
                         /*從程式內指定打開某一層時 找到上層節點都點開(遞迴)*/
@@ -60,7 +60,7 @@ var ngToolTreeView =  angular.module('ngToolTreeView', [])
             $scope._click = (item) => {
                 if(!item.data.disabled) {
                     tool.changeNode(item.data.NodeID);
-                    $scope.click(item);
+                    $scope.click(item); 
                 }
             }
         }

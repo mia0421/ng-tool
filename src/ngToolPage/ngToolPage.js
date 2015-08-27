@@ -8,10 +8,10 @@ var ngToolPage =  angular.module('ngToolPage', [])
     return {
         templateUrl: '../src/ngToolPage/ngToolPage.html',
         scope: {
-            pageItems : "=", /*一組幾頁*/
-            pageTotal : "=",/*共幾頁*/
-            nowPage   : "=",/*現在頁數*/
-            chengEvent: "=",/*頁碼變換事件*/
+            pageItems : "=pageItems", /*一組幾頁*/
+            pageTotal : "=pageTotal",/*共幾頁*/
+            nowPage   : "=nowPage",/*現在頁數*/
+            chengEvent: "&",/*頁碼變換事件*/
             simpleView: "=" //是否顯示簡單頁碼
         },
         link (scope, element, attr) {
@@ -85,33 +85,33 @@ var ngToolPage =  angular.module('ngToolPage', [])
                     case "next":
                         if (_nowPage + 1 >= 1 && _nowPage + 1 <= _pageTotal) {
                             scope._nowPage += 1;
-                            chengEvent(scope._nowPage);
+                            chengEvent({data:scope._nowPage});
                         }
                         break;
                     case "previous":
                         if (_nowPage - 1 >= 1 && _nowPage - 1 <= _pageTotal) {
                             scope._nowPage -= 1;
-                            chengEvent(scope._nowPage);
-                        }
+                            chengEvent({data:scope._nowPage});
+                         }
                         break;
                     case "nextArray":
                         let newPage = PageArray[_pageItems - 1]+1;
                         if (newPage >=1 && newPage <= scope._pageTotal) {
                             scope._nowPage = newPage;
-                            chengEvent(newPage);
+                            chengEvent({data:scope._nowPage});
                         }
                         break;
                     case "previousArray":
                         var newPage = PageArray[0] - _pageItems;
                         if (newPage >= 1 && newPage <= _pageTotal) {
                             scope._nowPage = newPage;
-                            chengEvent(newPage);
+                            chengEvent({data:scope._nowPage});
                         }
                         break;
                     case "toPage":
                         if (page >= 1 && page <= _pageTotal) {
                             scope._nowPage = page;
-                            chengEvent(page);
+                             chengEvent({data:scope._nowPage});
                         }
                         break;
                 }
@@ -138,6 +138,7 @@ var ngToolPage =  angular.module('ngToolPage', [])
                     PageToole.initPage();
                 }
             });
+
         }
     }
 }]);
